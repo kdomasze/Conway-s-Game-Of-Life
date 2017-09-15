@@ -1,10 +1,14 @@
 #include <SFML/Graphics.hpp>
+#include "GridLines.h"
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-	sf::CircleShape shape(100.f);
-	shape.setFillColor(sf::Color::Green);
+	const int windowSize = 800;
+	const int gridBoxSize = 16;
+
+	sf::RenderWindow window(sf::VideoMode(windowSize, windowSize), "Conway's Game of Life");
+
+	GridLines gridLines(windowSize, gridBoxSize);
 
 	while (window.isOpen())
 	{
@@ -15,8 +19,10 @@ int main()
 				window.close();
 		}
 
-		window.clear();
-		window.draw(shape);
+		window.clear(sf::Color::Black);
+
+		gridLines.Draw(window);
+
 		window.display();
 	}
 
