@@ -164,11 +164,11 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GridLines.cpp" />
+    <ClCompile Include="Grid.cpp" />
     <ClCompile Include="..\..\Conway%27s Game of Life\Conway%27s Game of Life\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GridLines.h" />
+    <ClInclude Include="Grid.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

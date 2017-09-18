@@ -1,14 +1,15 @@
 #include <SFML/Graphics.hpp>
-#include "GridLines.h"
+#include "Grid.h"
 
 int main()
 {
-	const int windowSize = 800;
-	const int gridBoxSize = 16;
+	const int windowSize = 1000;
+	const int gridBoxSize = 100;
 
 	sf::RenderWindow window(sf::VideoMode(windowSize, windowSize), "Conway's Game of Life");
+	window.setKeyRepeatEnabled(false);
 
-	GridLines gridLines(windowSize, gridBoxSize);
+	Grid grid(windowSize, gridBoxSize);
 
 	while (window.isOpen())
 	{
@@ -17,11 +18,13 @@ int main()
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
+			if(event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
+				grid.ToggleGridCell(sf::Mouse::getPosition(window));
 		}
 
 		window.clear(sf::Color::Black);
 
-		gridLines.Draw(window);
+		grid.Draw(window);
 
 		window.display();
 	}

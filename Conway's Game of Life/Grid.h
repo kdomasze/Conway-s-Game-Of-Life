@@ -6,17 +6,24 @@ namespace sf {
 	class RenderWindow;
 }
 
-class GridLines
+class Grid
 {
 public:
-	GridLines(int winSize, int gridSize);
-	~GridLines();
+	Grid(int winSize, int gridSize);
+	~Grid();
+
+	void ToggleGridCell(sf::Vector2i localMousePosition);
 	void Draw(sf::RenderWindow& window);
 
 private:
-	sf::Vertex ***grid;
+	sf::Vertex ***gridLines;
+
+	bool **grid;
+
 	int windowSize;
 	int gridBoxSize;
-	void CalculateGrid();
+
+	void InitializeGrid();
+	void GenerateGridLines();
 };
 
