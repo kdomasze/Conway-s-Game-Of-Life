@@ -164,11 +164,15 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Conway%27s Game of Life\Conway%27s Game of Life\Game.cpp" />
+    <ClCompile Include="ApplicationAdapter.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="..\..\Conway%27s Game of Life\Conway%27s Game of Life\Simulation.cpp" />
     <ClCompile Include="..\..\Conway%27s Game of Life\Conway%27s Game of Life\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Conway%27s Game of Life\Conway%27s Game of Life\Game.h" />
+    <ClInclude Include="ApplicationAdapter.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="..\..\Conway%27s Game of Life\Conway%27s Game of Life\Simulation.h" />
   </ItemGroup>

@@ -24,12 +24,24 @@
     <ClCompile Include="Grid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ApplicationAdapter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Conway%27s Game of Life\Conway%27s Game of Life\Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Conway%27s Game of Life\Conway%27s Game of Life\Simulation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Grid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ApplicationAdapter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Conway%27s Game of Life\Conway%27s Game of Life\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
