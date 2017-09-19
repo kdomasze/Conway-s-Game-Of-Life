@@ -43,16 +43,22 @@ int Simulation::GetAliveCells(Grid *gridClone, int x, int y)
 
 	int cellsAlive = 0;
 
-	for (int xi = x - 1; xi <= x + 1; xi++)
+	for (int x_internal = x - 1; x_internal <= x + 1; x_internal++)
 	{
-		for (int yi = y - 1; yi <= y + 1; yi++)
+		for (int y_internal = y - 1; y_internal <= y + 1; y_internal++)
 		{
-			if (!(xi < 0 || yi < 0 || xi >= size || yi >= size))
+			int x_internalFixed = x_internal;
+			int y_internalFixed = y_internal;
+
+			if (x_internalFixed < 0) x_internalFixed = size - 1;
+			if (y_internalFixed < 0) y_internalFixed = size - 1;
+
+			if (x_internalFixed >= size) x_internalFixed = 0;
+			if (y_internalFixed >= size) y_internalFixed = 0;
+
+			if (gridClone->GetStateAt(x_internalFixed, y_internalFixed) && !(x_internalFixed == x && y_internalFixed == y))
 			{
-				if (gridClone->GetStateAt(xi, yi) && !(xi == x && yi == y))
-				{
-					cellsAlive++;
-				}
+				cellsAlive++;
 			}
 		}
 	}
