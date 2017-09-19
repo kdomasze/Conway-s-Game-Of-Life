@@ -41,6 +41,10 @@ int main()
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
 		{
 			run = true;
+		} 
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+		{
+			run = false;
 		}
 
 		while (skippedTime > 10) {
