@@ -1,4 +1,4 @@
-# Conway-s-Game-Of-Life
+# Conway's Game Of Life
 
 A implementation of Conway's Game of Life in C++ and SFML.
 
