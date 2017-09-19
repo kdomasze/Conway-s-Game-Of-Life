@@ -44,6 +44,9 @@ void Game::PollEvent(sf::Event event)
 				case sf::Keyboard::Escape:
 					run = false;
 					break;
+				case sf::Keyboard::R:
+					grid->RandomizeState();
+					break;
 			}
 			break;
 	}

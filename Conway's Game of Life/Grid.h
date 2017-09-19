@@ -10,6 +10,8 @@ public:
 
 	bool GetStateAt(int x, int y);
 	void SetStateAt(int x, int y, bool value);
+	void RandomizeState();
+
 	int GetSize();
 
 	void Draw(sf::RenderWindow& window);

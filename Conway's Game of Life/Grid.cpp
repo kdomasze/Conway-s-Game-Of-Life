@@ -60,6 +60,18 @@ void Grid::SetStateAt(int x, int y, bool value)
 }
 
 
+void Grid::RandomizeState()
+{
+	for (int x = 0; x < size; x++)
+	{
+		for (int y = 0; y < size; y++)
+		{
+			grid[x][y] = rand() % 2;
+		}
+	}
+}
+
+
 int Grid::GetSize()
 {
 	return size;
