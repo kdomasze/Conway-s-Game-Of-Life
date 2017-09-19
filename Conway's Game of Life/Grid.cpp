@@ -5,25 +5,21 @@ Grid::Grid(int winSize, int gridSize)
 {
 	windowSize = winSize;
 	gridBoxSize = gridSize;
+	windowGridFactor = windowSize / gridBoxSize;
 
-	Grid::InitializeGrid();
+	Grid::InitializeGrids();
 	Grid::GenerateGridLines();
 }
 
-
 Grid::~Grid()
 {
-	// free the grid data array
-	for (int i = 0; i < windowSize / gridBoxSize; i++)
-	{
-		delete[] grid[i];
-	}
-	delete[] grid;
+	FreeGrid(grid, windowGridFactor);
+	FreeGrid(aliveGrid, windowGridFactor);
 
 	// free the grid lines array
 	for (int i = 0; i < 2; i++)
 	{
-		for (int j = 0; j < windowSize / gridBoxSize; j++)
+		for (int j = 0; j < windowGridFactor; j++)
 		{
 			delete[] gridLines[i][j];
 		}
@@ -31,7 +27,6 @@ Grid::~Grid()
 	}
 	delete[] gridLines;
 }
-
 
 void Grid::ToggleGridCell(sf::Vector2i localMousePosition)
 {
@@ -45,12 +40,28 @@ void Grid::ToggleGridCell(sf::Vector2i localMousePosition)
 }
 
 
+void Grid::Update()
+{
+	int dimensions = windowGridFactor;
+
+	for (int x = 0; x < dimensions; x++)
+	{
+		for (int y = 0; y < dimensions; y++)
+		{
+			aliveGrid[x][y] = grid[x][y];
+		}
+	}
+
+	StepThroughGrid();
+}
+
+
 void Grid::Draw(sf::RenderWindow& window)
 {
 	// draws grids
 	for (int i = 0; i < 2; i++)
 	{
-		for (int j = 0; j < windowSize / gridBoxSize; j++)
+		for (int j = 0; j < windowGridFactor; j++)
 		{
 			window.draw(gridLines[i][j], 2, sf::Lines);
 		}
@@ -59,9 +70,9 @@ void Grid::Draw(sf::RenderWindow& window)
 	// draws cell fills
 	sf::Vector2f size(gridBoxSize, gridBoxSize);
 
-	for (int x = 0; x < windowSize / gridBoxSize; x++)
+	for (int x = 0; x < windowGridFactor; x++)
 	{
-		for (int y = 0; y < windowSize / gridBoxSize; y++)
+		for (int y = 0; y < windowGridFactor; y++)
 		{
 			if(grid[x][y])
 			{
@@ -75,16 +86,27 @@ void Grid::Draw(sf::RenderWindow& window)
 }
 
 
-void Grid::InitializeGrid()
+void Grid::InitializeGrids()
 {
-	grid = new bool*[windowSize / gridBoxSize];
+	grid = new bool*[windowGridFactor];
 
-	for (int x = 0; x < windowSize / gridBoxSize; x++)
+	for (int x = 0; x < windowGridFactor; x++)
 	{
-		grid[x] = new bool[windowSize / gridBoxSize];
-		for (int y = 0; y < windowSize / gridBoxSize; y++)
+		grid[x] = new bool[windowGridFactor];
+		for (int y = 0; y < windowGridFactor; y++)
 		{
 			grid[x][y] = 0;
+		}
+	}
+
+	aliveGrid = new bool*[windowGridFactor];
+
+	for (int x = 0; x < windowGridFactor; x++)
+	{
+		aliveGrid[x] = new bool[windowGridFactor];
+		for (int y = 0; y < windowGridFactor; y++)
+		{
+			aliveGrid[x][y] = 0;
 		}
 	}
 }
@@ -96,8 +118,8 @@ void Grid::GenerateGridLines()
 
 	for (int i = 0; i < 2; i++)
 	{
-		gridLines[i] = new sf::Vertex*[windowSize / gridBoxSize];
-		for (int j = 0; j < windowSize / gridBoxSize; j++)
+		gridLines[i] = new sf::Vertex*[windowGridFactor];
+		for (int j = 0; j < windowGridFactor; j++)
 		{
 			gridLines[i][j] = new sf::Vertex[2];
 			for (int k = 0; k < 2; k++)
@@ -116,3 +138,67 @@ void Grid::GenerateGridLines()
 	}
 }
 
+
+void Grid::FreeGrid(bool **grid, int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		delete[] grid[i];
+	}
+	delete[] grid;
+}
+
+
+void Grid::StepThroughGrid()
+{
+	for (int x = 0; x < windowGridFactor; x++)
+	{
+		for (int y = 0; y < windowGridFactor; y++)
+		{
+			int cellsAlive = GetAliveCells(x, y);
+
+			UpdateCells(x, y, cellsAlive);
+		}
+	}
+}
+
+
+int Grid::GetAliveCells(int x, int y)
+{
+	int cellsAlive = 0;
+
+	for (int xi = x - 1; xi <= x + 1; xi++)
+	{
+		for (int yi = y - 1; yi <= y + 1; yi++)
+		{
+			if (!(xi < 0 || yi < 0 || xi >= windowGridFactor || yi >= windowGridFactor))
+			{
+				if (aliveGrid[xi][yi] && !(xi == x && yi == y))
+				{
+					cellsAlive++;
+				}
+			}
+		}
+	}
+
+	return cellsAlive;
+}
+
+
+void Grid::UpdateCells(int x, int y, int cellsAlive)
+{
+	if (aliveGrid[x][y])
+	{
+		if (cellsAlive < 2 || cellsAlive > 3)
+		{
+			grid[x][y] = false;
+		}
+	}
+	else
+	{
+		if (cellsAlive == 3)
+		{
+			grid[x][y] = true;
+		}
+	}
+}
