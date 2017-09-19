@@ -18,11 +18,17 @@
     <ClCompile Include="..\..\Conway%27s Game of Life\Conway%27s Game of Life\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Conway%27s Game of Life\Conway%27s Game of Life\Simulation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Grid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Conway%27s Game of Life\Conway%27s Game of Life\Simulation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Grid.h">
       <Filter>Header Files</Filter>
     </ClInclude>

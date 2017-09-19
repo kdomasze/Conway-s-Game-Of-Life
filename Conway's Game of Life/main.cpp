@@ -1,14 +1,16 @@
 #include <SFML/Graphics.hpp>
 #include "Grid.h"
+#include "Simulation.h"
 
 int main()
 {
 	const int windowSize = 1000;
-	const int gridBoxSize = 25;
+	const int gridCount = 50;
 
 	sf::RenderWindow window(sf::VideoMode(windowSize, windowSize), "Conway's Game of Life");
 
-	Grid grid(windowSize, gridBoxSize);
+	Grid *grid = new Grid(gridCount, windowSize);
+	Simulation sim(grid);
 	bool run = false;
 
 	sf::Clock clock;
@@ -25,7 +27,15 @@ int main()
 			if (event.type == sf::Event::Closed)
 				window.close();
 			if(event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
-				grid.ToggleGridCell(sf::Mouse::getPosition(window));
+			{
+				float x = sf::Mouse::getPosition(window).x;
+				float y = sf::Mouse::getPosition(window).y;
+
+				int gridXPos = floor(x / (windowSize / gridCount));
+				int gridYPos = floor(y / (windowSize / gridCount));
+
+				grid->SetStateAt(gridXPos, gridYPos, !grid->GetStateAt(gridXPos,gridYPos));
+			}
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
@@ -36,17 +46,18 @@ int main()
 		while (skippedTime > 10) {
 			if (run)
 			{
-				grid.Update();
+				sim.Update();
 			}
 			skippedTime -= 10;
 		}
 
 		window.clear(sf::Color::Black);
 
-		grid.Draw(window);
+		grid->Draw(window);
 
 		window.display();
 	}
 
+	delete grid;
 	return 0;
 }
