@@ -15,11 +15,15 @@ class Game : public ApplicationAdapter
 		void Render() override;
 		void Dispose() override;
 	private: 
+		sf::View view;
+
 		int gridCount;
 
 		Grid *grid;
 		Simulation *sim;
 
 		bool run;
+
+		void KeepViewportBounded();
 };
 
