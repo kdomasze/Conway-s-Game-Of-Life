@@ -2,6 +2,7 @@
 #include "ApplicationAdapter.h"
 #include "Grid.h"
 #include "Simulation.h"
+#include "Config.h"
 
 class Game : public ApplicationAdapter
 {
@@ -9,7 +10,7 @@ class Game : public ApplicationAdapter
 		Game(sf::RenderWindow *window);
 		~Game() {}
 
-		void Create() override;
+		void Create(Config *config) override;
 		void PollEvent(sf::Event event) override;
 		void Update() override;
 		void Render() override;
@@ -17,8 +18,7 @@ class Game : public ApplicationAdapter
 	private: 
 		sf::View view;
 
-		int gridCount;
-
+		Config *config;
 		Grid *grid;
 		Simulation *sim;
 

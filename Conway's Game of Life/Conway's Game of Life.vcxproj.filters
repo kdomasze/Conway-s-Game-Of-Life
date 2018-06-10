@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\libs">
+      <UniqueIdentifier>{20900f1a-498a-420e-b1ee-8d530d396693}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\libs">
+      <UniqueIdentifier>{8e729689-aeab-444e-b83c-f73624c31464}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Conway%27s Game of Life\Conway%27s Game of Life\main.cpp">
@@ -30,6 +36,9 @@
     <ClCompile Include="..\..\Conway%27s Game of Life\Conway%27s Game of Life\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Conway%27s Game of Life\Conway%27s Game of Life\Config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Conway%27s Game of Life\Conway%27s Game of Life\Simulation.h">
@@ -44,5 +53,14 @@
     <ClInclude Include="..\..\Conway%27s Game of Life\Conway%27s Game of Life\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Conway%27s Game of Life\Conway%27s Game of Life\StringLib.h">
+      <Filter>Header Files\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Conway%27s Game of Life\Conway%27s Game of Life\Config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Conway%27s Game of Life\Conway%27s Game of Life\ClassDiagram.cd" />
   </ItemGroup>
 </Project>

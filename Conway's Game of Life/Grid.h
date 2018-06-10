@@ -4,24 +4,28 @@
 class Grid
 {
 public:
-	Grid(int size, int windowSize);
+	Grid(int gridX, int gridY, int windowSize);
 	~Grid();
 	Grid *Clone();
 
 	bool GetStateAt(int x, int y);
 	void SetStateAt(int x, int y, bool value);
+	void SetStateForAll(std::vector<std::vector<bool>> gridLayout);
 	void RandomizeState();
 
-	int GetSize();
+	int GetGridX();
+	int GetGridY();
 
 	void Draw(sf::RenderWindow& window);
 
 private:
 	bool **grid;
-	int size;
+	int gridX;
+	int gridY;
 
 	sf::Vertex ***gridLines;
-	int gridPixelSize;
+	int gridPixelSizeX;
+	int gridPixelSizeY;
 	int windowSize;
 
 	void GenerateGridLines();

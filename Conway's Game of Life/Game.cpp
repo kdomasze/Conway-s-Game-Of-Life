@@ -6,17 +6,24 @@ Game::Game(sf::RenderWindow *window) : ApplicationAdapter(window)
 
 }
 
-void Game::Create()
+void Game::Create(Config *config)
 {
-	view.setCenter(window->getSize().x / 2, window->getSize().x / 2);
+	// prepare viewport
+	view.setCenter(window->getSize().x / 2.0f, window->getSize().x / 2.0f);
 	view.setSize(1000, 1000);
 	view.setViewport(sf::FloatRect(0, 0, 1, 1));
 
 	window->setView(view);
 
-	gridCount = 100;
+	this->config = config;
 
-	grid = new Grid(gridCount, window->getSize().x);
+	// prepare grid
+	grid = new Grid(config->GetgridsX(), config->GetgridsY(), window->getSize().x);
+
+	// load grid data from config
+	grid->SetStateForAll(config->getGridLayout());
+
+	// start simulation
 	sim = new Simulation(grid);
 
 	run = false;
@@ -33,13 +40,14 @@ void Game::PollEvent(sf::Event event)
 			switch(event.mouseButton.button)
 			{
 				case sf::Mouse::Left:
+					// map pixel coords to grid coords to find which cell is interacted with, and toggle its state
 					sf::Vector2f worldPos = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
 
 					float x = worldPos.x;
 					float y = worldPos.y;
 
-					int gridXPos = floor(x / (window->getSize().x / gridCount));
-					int gridYPos = floor(y / (window->getSize().x / gridCount));
+					int gridXPos = (int)floor(x / (window->getSize().x / config->GetgridsX()));
+					int gridYPos = (int)floor(y / (window->getSize().y / config->GetgridsY()));
 
 					grid->SetStateAt(gridXPos, gridYPos, !grid->GetStateAt(gridXPos, gridYPos));
 					break;
@@ -77,11 +85,11 @@ void Game::PollEvent(sf::Event event)
 				case sf::Mouse::VerticalWheel:
 					if(event.mouseWheelScroll.delta > 0)
 					{
-						view.zoom(0.9);
+						view.zoom(0.9f);
 					}
 					else if(event.mouseWheelScroll.delta < 0)
 					{
-						view.zoom(1.1);
+						view.zoom(1.1f);
 					}
 					break;
 			}
@@ -116,28 +124,29 @@ void Game::Dispose()
 
 void Game::KeepViewportBounded()
 {
+	// TODO: there seems to be an issue with this function. Window doens't resize properly.
 	if (view.getSize().x > window->getSize().x || view.getSize().y > window->getSize().y)
 	{
-		view.setSize(window->getSize().x, window->getSize().y);
+		view.setSize((float)window->getSize().x, (float)window->getSize().y);
 	}
 
-	if (view.getCenter().x + (view.getSize().x / 2.) > window->getSize().x)
+	if (view.getCenter().x + (view.getSize().x / 2.0f) > window->getSize().x)
 	{
-		view.setCenter(window->getSize().x - (view.getSize().x / 2.), view.getCenter().y);
+		view.setCenter(window->getSize().x - (view.getSize().x / 2.0f), view.getCenter().y);
 	}
 
-	if (view.getCenter().x - (view.getSize().x / 2.) < 0)
+	if (view.getCenter().x - (view.getSize().x / 2.0f) < 0)
 	{
-		view.setCenter((view.getSize().x / 2.), view.getCenter().y);
+		view.setCenter((view.getSize().x / 2.0f), view.getCenter().y);
 	}
 
-	if (view.getCenter().y + (view.getSize().y / 2.) > window->getSize().y)
+	if (view.getCenter().y + (view.getSize().y / 2.0f) > window->getSize().y)
 	{
-		view.setCenter(view.getCenter().x, window->getSize().y - (view.getSize().y / 2.));
+		view.setCenter(view.getCenter().x, window->getSize().y - (view.getSize().y / 2.0f));
 	}
 
-	if (view.getCenter().y - (view.getSize().y / 2.) < 0)
+	if (view.getCenter().y - (view.getSize().y / 2.0f) < 0)
 	{
-		view.setCenter(view.getCenter().x, view.getSize().y / 2.);
+		view.setCenter(view.getCenter().x, view.getSize().y / 2.0f);
 	}
 }

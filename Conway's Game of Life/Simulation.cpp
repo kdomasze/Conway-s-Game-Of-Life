@@ -23,11 +23,9 @@ void Simulation::Update()
 
 void Simulation::StepThroughGrid(Grid *gridClone)
 {
-	int size = gridClone->GetSize();
-
-	for (int x = 0; x < size; x++)
+	for (int x = 0; x < gridClone->GetGridX(); x++)
 	{
-		for (int y = 0; y < size; y++)
+		for (int y = 0; y < gridClone->GetGridY(); y++)
 		{
 			int cellsAlive = GetAliveCells(gridClone, x, y);
 
@@ -39,8 +37,6 @@ void Simulation::StepThroughGrid(Grid *gridClone)
 
 int Simulation::GetAliveCells(Grid *gridClone, int x, int y)
 {
-	int size = gridClone->GetSize();
-
 	int cellsAlive = 0;
 
 	for (int x_internal = x - 1; x_internal <= x + 1; x_internal++)
@@ -50,11 +46,11 @@ int Simulation::GetAliveCells(Grid *gridClone, int x, int y)
 			int x_internalFixed = x_internal;
 			int y_internalFixed = y_internal;
 
-			if (x_internalFixed < 0) x_internalFixed = size - 1;
-			if (y_internalFixed < 0) y_internalFixed = size - 1;
+			if (x_internalFixed < 0) x_internalFixed = gridClone->GetGridX() - 1;
+			if (y_internalFixed < 0) y_internalFixed = gridClone->GetGridY() - 1;
 
-			if (x_internalFixed >= size) x_internalFixed = 0;
-			if (y_internalFixed >= size) y_internalFixed = 0;
+			if (x_internalFixed >= gridClone->GetGridX()) x_internalFixed = 0;
+			if (y_internalFixed >= gridClone->GetGridY()) y_internalFixed = 0;
 
 			if (gridClone->GetStateAt(x_internalFixed, y_internalFixed) && !(x_internalFixed == x && y_internalFixed == y))
 			{
@@ -65,7 +61,6 @@ int Simulation::GetAliveCells(Grid *gridClone, int x, int y)
 
 	return cellsAlive;
 }
-
 
 void Simulation::UpdateCells(Grid *gridClone, int x, int y, int cellsAlive)
 {

@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics/RenderWindow.hpp>
+#include "Config.h"
 
 class ApplicationAdapter
 {
@@ -7,7 +8,7 @@ class ApplicationAdapter
 		ApplicationAdapter(sf::RenderWindow *window);
 		virtual ~ApplicationAdapter() {}
 
-		virtual void Create() = 0;
+		virtual void Create(Config *config) = 0;
 		virtual void PollEvent(sf::Event event) = 0;
 		virtual void Update() = 0;
 		virtual void Render() = 0;
